@@ -1,0 +1,105 @@
+debian9编译qBittorrent 4.1.9
+2019-01-25 分类：日志 阅读(2926)	评论(0) 
+debian9的教程，debian8理论上也能搞，但是debian8自带的源搞过来的qt好像版本太旧不行的，自行换成debian9的源应该也可以通过的。
+
+安装4.1.9的原因是4.2.x很多PT站不支持，之前的老版本不建议安装了。
+
+1.安裝libtorrent
+先安装依赖：
+
+apt-get update
+1
+apt-get update
+apt-get install build-essential pkg-config automake libtool git libgeoip-dev python3 python3-dev -y
+1
+apt-get install build-essential pkg-config automake libtool git libgeoip-dev python3 python3-dev -y
+apt-get install libboost-dev libboost-system-dev libboost-chrono-dev libboost-random-dev libssl-dev -y
+1
+apt-get install libboost-dev libboost-system-dev libboost-chrono-dev libboost-random-dev libssl-dev -y
+apt-get install qtbase5-dev qttools5-dev-tools libqt5svg5-dev zlib1g-dev -y
+1
+apt-get install qtbase5-dev qttools5-dev-tools libqt5svg5-dev zlib1g-dev -y
+从NPCHK大佬那边得知。 libtorrent 1.1.13: 适用于qBittorrent4.0.0或更新版本 ，所以就装这个版本吧
+
+
+wget https://github.com/arvidn/libtorrent/releases/download/libtorrent-1_1_13/libtorrent-rasterbar-1.1.13.tar.gz
+tar xf libtorrent-rasterbar-1.1.13.tar.gz
+cd libtorrent-rasterbar-1.1.13
+./configure --disable-debug --enable-encryption --with-libgeoip=system
+make -j$(nproc)
+make install
+ldconfig
+1
+2
+3
+4
+5
+6
+7
+8
+ 
+wget https://github.com/arvidn/libtorrent/releases/download/libtorrent-1_1_13/libtorrent-rasterbar-1.1.13.tar.gz
+tar xf libtorrent-rasterbar-1.1.13.tar.gz
+cd libtorrent-rasterbar-1.1.13
+./configure --disable-debug --enable-encryption --with-libgeoip=system
+make -j$(nproc)
+make install
+ldconfig
+2.安裝qBittorrent 4.1.9
+wget https://github.com/qbittorrent/qBittorrent/archive/release-4.1.9.tar.gz
+tar xf release-4.1.9.tar.gz
+cd qBittorrent-release-4.1.9
+./configure --disable-gui --disable-debug
+make -j$(nproc)
+make install
+wget https://github.com/qbittorrent/qBittorrent/archive/release-4.1.9.tar.gz
+tar xf release-4.1.9.tar.gz
+cd qBittorrent-release-4.1.9
+./configure --disable-gui --disable-debug
+make -j$(nproc)
+make install
+3.开机启动
+nano /etc/systemd/system/qbittorrent.service
+nano /etc/systemd/system/qbittorrent.service
+[Unit]
+Description=qBittorrent Daemon Service
+After=network.target
+
+[Service]
+LimitNOFILE=512000
+User=root
+ExecStart=/usr/local/bin/qbittorrent-nox
+ExecStop=/usr/bin/killall -w qbittorrent-nox
+
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=qBittorrent Daemon Service
+After=network.target
+ 
+[Service]
+LimitNOFILE=512000
+User=root
+ExecStart=/usr/local/bin/qbittorrent-nox
+ExecStop=/usr/bin/killall -w qbittorrent-nox
+ 
+[Install]
+WantedBy=multi-user.target
+启用设置：
+
+systemctl enable qbittorrent.service
+1
+systemctl enable qbittorrent.service
+启动qBittorrent
+
+qbittorrent-nox
+1
+qbittorrent-nox
+这时候去访问一下web页面，ip:8080,用户名admin，密码adminadmin，然后更改一下语言啊，下载地址啊之类的设置，按Ctrl+C断下来，退出。这里说下为了防止出错，建议给下载目录0777权限。
+
+再次运行，这次在后台运行，这样shell关掉了qBittorrent不会结束进程
+
+systemctl start qbittorrent.service
+1
+systemctl start qbittorrent.service

@@ -1,0 +1,230 @@
+***********************************************************************************************************************************************************************
+docker-compose安装脚本
+curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+********************************************************************************************************************************************************************************************
+DEBIAN一键安装oh-my-zsh
+输入下面指令安装oh-my-zsh
+curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+使用agnoster主题
+1）下载agnoster主题
+到下载的工程里面运行install文件,主题将安装到~/.oh-my-zsh/themes目录下
+2）设置该主题
+进入~/.zshrc打开.zshrc文件，然后将ZSH_THEME后面的字段改为agnoster。ZSH_THEME="agnoster"（agnoster即为要设置的主题）
+增加指令高亮效果——zsh-syntax-highlighting
+指令高亮效果作用是当用户输入正确命令时指令会绿色高亮，错误时命令红色高亮
+1）cd到.zshrc所在目录
+2）执行指令将工程克隆到当前目录
+git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
+3）打开.zshrc文件，在最后添加下面内容
+source XXX/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+保存文件。
+注意：xxx代表.zshrc所在目录
+4）cd ~/.oh-my-zsh/custom/plugins
+5）再次打开.zshrc文件，在最后面添加下面内容
+plugins=(zsh-syntax-highlighting)
+保存文件。
+***************************************************************************************************************************************************************************************/*****
+find命令查找并删除文件
+find /home/a1/202104 -iregex ".*\(\.txt\|\.png\|\.html\有趣的小视频.mp4\)$"  -exec rm {} \;
+find查找并移动
+find /home/a1/202104 -iregex ".*\(\.mp4\|\.avi\|\.mkv\)$"  -exec mv /home/a1/202104   {} \;
+find查找并在当前目录解压
+find . -name "*.7z.*" | xargs -n1 unar -e GBK -p suolun9527 
+**********************************************************************************************************************************************************************************************
+nano test.txt
+youtube-dl -f best --ignore-errors --batch-file=test.txt
+apt install screen
+apt install fuze
+netstat -ntlp
+ps -eo euser,ruser,suser,fuser,f,comm,label
+ apt-get install htop
+***********************************************************************************************************************************************************************************************
+buyvm 创建挂载盘
+/dev/disk/by-id/
+mkfs.ext4 -F /dev/disk/by-id/scsi-0BUYVM_SLAB_V
+mkdir -p /mnt/256
+mount -o discard,defaults /dev/disk/by-id/scsi-0BUYVM_SLAB_V /mnt/256
+cd /mnt/256
+#取消挂载
+fusermount -qzu <本地路径>
+rclone mount acg: /home/acg --copy-links --no-gzip-encoding --no-check-certificate --allow-other --allow-non-empty --umask 000 &
+***********************************************************************
+搭建网易云解析
+docker run --restart=always --name unmusic -d -p 1800:8080 nondanee/unblockneteasemusic
+***********************************************************************
+搭建simple-torrent
+bash <(wget -qO- https://raw.githubusercontent.com/boypt/simple-torrent/master/scripts/quickinstall.sh)
+nano cloud-torrent.json
+cd /mnt/256
+mkdir down
+chmod +x down
+cd /root
+nano mv.sh
+卸载
+rm -rf /usr/local/bin/cloud-torrent ~/cloud-torrent.json
+转移文件不含过滤功能
+**************************************************************************************************************************************************************************************************
+#!/bin/bash
+#下载后移动的文件夹路径
+RemoteDIR="/home/acg2/porn";
+if [[ ${CLD_TYPE} == "torrent" ]]; then
+eval mv \'"${CLD_DIR}/${CLD_PATH}"\' "${RemoteDIR}";
+#移动后停止该任务
+curl --data "stop:${CLD_HASH}" "http://127.0.0.1:3000/api/torrent";
+#停止后清除该任务，也就是不会出现在Web界面了
+curl --data "delete:${CLD_HASH}" "http://127.0.0.1:3000/api/torrent";
+fi
+************************************************************************
+nano cloud-torrent.json
+挂载网盘1
+rclone mount acg: /home/acg --copy-links --no-gzip-encoding --no-check-certificate --allow-other --allow-non-empty --umask 000 &
+挂载网盘2
+rclone mount acg: /home/acg2 --copy-links --no-gzip-encoding --no-check-certificate --allow-other --allow-non-empty --umask 000 &
+卸载挂载盘
+fusermount -qzu /home/acg2
+rm -rf /usr/local/bin/cloud-torrent ~/cloud-torrent.json
+bash <(wget -qO- https://raw.githubusercontent.com/boypt/simple-torrent/master/scripts/quickinstall.sh)
+systemctl start cloud-torrent
+rclone网盘对拷
+rclone copy acg2:pornhub one:acg2/pornhub -P -v --transfers=4 --ignore-errors
+rclone网盘同步
+rclone sync /var/lib/emby one:embyback -P -v --transfers=4 --ignore-errors
+**************************************************************************************************************************************************************************************************
+docker安装aria2-pro
+***********************************************************************
+docker pull p3terx/aria2-pro
+docker run -d \
+    --name aria2-pro \
+    --restart unless-stopped \
+    --log-opt max-size=1m \
+    --network host \
+    -e PUID=$UID \
+    -e PGID=$GID \
+    -e RPC_SECRET=1319964f \
+    -e RPC_PORT=6800 \
+    -e LISTEN_PORT=6888 \
+    -e SPECIAL_MODE=rclone \
+    -v ~/aria2:/config \
+    -v /mnt/256/down:/downloads \
+    -v ~/aria2/complted:/complted \
+    -e SPECIAL_MODE=rclone \
+    p3terx/aria2-pro
+************************************************************************************************************************************************************************************************** 
+重装
+docker rm -f aria2-pro
+docker rmi p3terx/aria2-pro
+rm -rf ~/aria2-config
+
+重启 
+docker start aria2-pro
+停止
+docker stop aria2-pro
+开始
+docker start aria2-pro
+重启
+docker restart aria2-pro
+**********************************************************************
+一键安装docker Debian10                                         
+curl -fsSL https://get.docker.com -o get-docker.sh                   
+sh get-docker.sh                                                     
+**********************************************************************
+安裝Portainer docker管理程序
+docker search portainer
+下載Portainer镜象
+docker pull portainer/portainer 
+  #建立数据卷
+  docker volume create portainer_data
+  #啓動容器命令
+docker run -d -p 9000:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data --name prtainer-test portainer/portainer
+**************************************************************************************************************************************************************************************************
+安装sharelist
+docker build -t yourname/sharelist .
+
+docker run -d -v /etc/sharelist:/app/cache -p 33001:33001 --name="sharelist" yourname/sharelist
+**************************************************************************************************************************************************************************************************
+docker安装EMBY
+COPY emby镜像到本地
+docker run --name=emby -d -v /root/emby/config:/config   -v /home/acg:/mnt/share1 -v /home/one:/mnt/share2     -p 8096:8096  -p 2053:2053  -e UID=1000  -e GID=100  -e GIDLIST=100 --restart unless-stopped  zishuo/embyserver 
+**************************************************************************************************************************************************************************************************
+一键安装go语言环境
+source <(curl -L https://go-install.netlify.app/install.sh)
+**************************************************************************************************************************************************************************************************
+Transmisson
+wget --no-check-certificate https://raw.githubusercontent.com/DeanJing/TransmissionForDebian/master/TransmissionForDebian.sh
+sh TransmissionForDebian.sh
+**************************************************************************************************************************************************************************************************
+安装7za
+apt-get install p7zip p7zip-full p7zip-rar 
+解压脚本
+#!/bin/bash
+
+export LANG=C
+
+7z x -o -p passwd *.zip
+
+convmv --replace -f  -t utf8 -r --notest $(find . -type f)
+
+unar -e GBK -p aitugg *.zip
+7za -x -paitugg| *.zip
+
+***†**********************************************************************************************************************************************************************************************
+一键rclone/gclone
+bash <(curl -sL https://git.io/gclone-mount)
+**************************************************************************************************************************************************************************************************
+OneIndex一键安装
+**************************************************************************************************************************************************************************************************
+docker run -d --name oneindex \
+    -p 8880:80 --restart=always \
+    -v ~/oneindex/config:/var/www/html/config \
+    -v ~/oneindex/cache:/var/www/html/cache \
+    -e REFRESH_TOKEN='0 * * * *' \
+    -e REFRESH_CACHE='*/10 * * * *' \
+    setzero/oneindex
+**************************************************************************************************************************************************************************************************
+qbitorrent一键安装
+wget --no-check-certificate -qO inexistence.sh https://github.com/Aniverse/inexistence/raw/master/inexistence.sh
+bash inexistence.sh  
+**************************************************************************************************************************************************************************************************
+tele-aria2机器人搭建
+获取用户 ID
+	给刚创建 Bot 随便发送一个信息
+	访问https://api.telegram.org/bot<TOKEN>/getUpdates（替换<TOKEN>字段），会获得一长串信息，其中"id":字段后面的数字就是所要获取的用户 ID 。
+部署 tele-aria2
+为了防止环境不统一导致部署失败将使用 Docker 进行部署。
+	首先编写一个配置文件，从上到下依次是 Aria2 RPC 地址、密钥、代理地址、Bot 访问令牌、用户 ID、任务显示数量最大值。根据自己的实际情况填写，自由地区的 VPS 可以去掉代理地址配置。
+{
+  "aria2-server": "ws://10.0.0.2:6800/jsonrpc",
+  "aria2-key": "P3TERX_2020",
+  "proxy": "http://127.0.0.1:7890",
+  "bot-key": "123456789:xyz",
+  "user-id": "123456",
+  "max-index": 10
+}
+TIPS: 如果你需要多用户支持，用户 ID 之间用,(半角逗号)隔开即可，就像这样："user-id": "123,456,789"
+	把编写好的配置文件保存到 ~/.tele-aria2-conf.json（这个文件名称和路径随意，自己知道就行，后面的 Docker 运行命令中记得替换）
+nano ~/.tele-aria2-conf.json
+	运行 Docker 容器
+docker run -d \
+    --name tele-aria2 \
+    --restart unless-stopped \
+    --log-opt max-size=1m \
+    --network host \
+    -v ~/.tele-aria2-conf.json:/config.json \
+    p3terx/tele-aria2:0.2.2
+	发送/start给 Bot ，Bot 回复并弹出菜单即代表部署成果。
+**************************************************************************************************************************************************************************************************
+开机自启设置
+chmod +x /etc/rc.d/rc.local
+nano /etc/rc.d/rc.local
+*****************************************
+	bash <(wget -qO- https://git.io/gclone.sh) gclone一键安装
+*****************************************************************
+
+       nodejs一键安装
+       
+curl -sL https://deb.nodesource.com/setup_lts.x | bash -
+apt-get install -y nodejs
+
+*****************************************************************

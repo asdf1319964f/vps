@@ -1,0 +1,50 @@
+rclone mount 挂载目录 --copy-links --no-gzip-encoding --no-check-certificate --allow-other --allow-non-empty --umask 000 --daemon
+rclone copy 挂载目录1 挂载目录2 -P
+rclone copy --ignore-existing rclone增量备份
+gclone copy gd:{} gd:{} --drive-server-side-across-configs Googledrive对拷
+ondedrive拷贝到google
+rclone copy -P od:abc gd:abc --ignore-errors --stats-one-line onedrive 对拷googledrive
+后台运行screen
+screen -S 运行进程命名
+查看 screen后台运行的进程
+screen -ls
+切入
+screen -r 运行进程
+关闭
+screen -X -S 运行进程
+开机自启动设置
+chmod +x /etc/rc.d/rc.local
+nano /etc/rc.d/rc.local
+把要开机自动执行的命令添加进去
+
+rclone mount gd: /gdrive/disk --copy-links --no-gzip-encoding --no-check-certificate --allow-other --allow-non-empty --umask 000 --daemon
+systemctl enable jellyfin
+systemctl start jellyfin
+jellyfin&
+
+
+因为之前更改了yum源，这次做更新的时候不知什么原因 报Freeing read locks for locker
+
+解决：yum clean all
+补充一、
+
+有时，在linux下yum update会提示： 
+
+Another app is currently holding the yum lock解决方案 
+
+解决办法是干掉缓存中的yum进程，重启yum。 
+
+清掉缓存中的进程： 
+
+rm -f /var/run/yum.pid 
+
+重启yum（我的系统是centos7） 
+
+systemctl status yum-updatesd.service 
+
+centos用户使用： 
+
+/sbin/service yum-updatesd restart
+
+EmbyDocker
+docker run --name=emby -d -v /root/emby/config:/config     -v /{本地挂载rclone目录}:/00     -p 8096:8096  -p 8920:8920  -e UID=1000  -e GID=100  -e GIDLIST=100 --restart unless-stopped  emby/embyserver:latest
