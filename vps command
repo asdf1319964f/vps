@@ -78,6 +78,8 @@ curl --data "delete:${CLD_HASH}" "http://127.0.0.1:3000/api/torrent";
 fi
 ************************************************************************
 nano cloud-torrent.json
+rclone mount wei: /media/video --config /root/.config/rclone/rclone.conf  --vfs-cache-mode writes  --use-mmap --daemon-timeout=10m --vfs-read-chunk-size 10M --vfs-read-chunk-size-limit 512M --cache-dir /home/rclone/vfs_cache --allow-other  --drive-chunk-size 128M --log-level INFO --log-file /var/log/rclone.log --timeout 1h --umask 002
+
 挂载网盘1
 rclone mount acg: /home/acg --copy-links --no-gzip-encoding --no-check-certificate --allow-other --allow-non-empty --umask 000 &
 挂载网盘2
