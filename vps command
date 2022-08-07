@@ -1,3 +1,11 @@
+***********************************************************************************************************************************************************************
+docker 一键安装zflie
+docker run -d --name=zfile --restart=always \
+    -p 8080:8080 \
+    -v /root/zfile/conf:/root/.zfile-v4 \
+    -v /root/zfile/data:/root/zfile/data \
+    stilleshan/zfile
+***********************************************************************************************************************************************************************
 一键bbr   debian10
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
