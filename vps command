@@ -1,8 +1,10 @@
-onedrive for business自动续期及应用注册
+***********************************************************************************************************************************************************************
+onedrive E5自动续期及应用注册
 应用注册地址 
 进入https://azure.microsoft.com/zh-cn/
 点击管理Azure Active Directory
-点击左侧扩展栏里应用注册 新注册 e5订阅web填写http://localhost/e5sub
+点击左侧扩展栏里应用注册 新注册 
+e5订阅web填写http://localhost/e5sub
 Onemanager https://scfonedrive.github.io 
 Alist https://tool.nn.ci/onedrive/callback
 注册和密码 进行注册copy应用密码
