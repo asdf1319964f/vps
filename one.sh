@@ -1,0 +1,205 @@
+#!/bin/bash
+#zonghe
+usage(){
+	case $choice in
+		1)
+			read -p "bbr: " old_file new_file
+			echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+			echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+			sysctl -p
+			if [ $? -eq 0 ];then
+				    echo "success!" >&2
+			fi    
+			     sleep 2
+			     ;;
+
+
+		     2)
+			     read -p "pikpak-webdav : " file newname
+		     docker run -d \
+		     --name=pikpak-webdav \
+		     --restart=unless-stopped \
+		     --network=host \
+		     -v /etc/localtime:/etc/localtime \
+		     -e TZ="Asia/Shanghai" \
+		     -e JAVA_OPTS="-Xmx512m"  \
+		     -e SERVER_PORT="8080" \
+		     -e PIKPAK_USERNAME="asdf131996455@gmail.com" \
+		     -e PIKPAK_PASSWORD="1319964f" \
+		     -e PIKPAK_PROXY_HOST="" \
+		     -e PIKPAK_PROXY_PORT="" \
+		     -e PIKPAK_PROXY_PROXY-TYPE="HTTP/SOCKS/DIRECT"  \
+		     vgearen/pikpak-webdav
+		     if [ $? -eq 0 ] ;then
+			         echo "success!" >&2
+		     fi    
+		     sleep 2
+		     ;;
+
+
+	     3)
+		     read -p "Docker : " filename
+		     curl -fsSL https://get.docker.com -o get-docker.sh                   
+		     sh get-docker.sh
+		     if [ $? -eq 0 ];then
+			         echo "success!" >&2
+		     fi    
+		     sleep 2
+		     ;;
+
+	     4)
+		     read -p "修复SSL : " filename
+		     rm -f /etc/ssl/certs/ca-bundle.crt
+		     apt reinstall ca-certificates
+		     update-ca-certificates
+		     if [ $? -eq 0 ];then
+			         echo "success!" >&2
+		     fi    
+		     sleep 2
+		     ;;
+
+	     5)
+		     read -p "zfile : " filename
+	     docker run -d \
+	     --name=zfile \
+	     --restart=always \
+		 -p 8080:8080 \
+		 -v /root/zfile/conf:/root/.zfile-v4 \
+	     -v /root/zfile/data:/root/zfile/data \
+	     stilleshan/zfile
+
+	     if [ $? -eq 0 ];then
+		         echo "success!" >&2
+	     fi    
+	     sleep 2
+             ;;
+	     6)
+
+	     read -p "Docker-Compose : " filename
+	     curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+	     chmod +x /usr/local/bin/docker-compose
+	      ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+	      if [ $? -eq 0 ];then
+		          echo "success!" >&2
+	      fi    
+	      sleep 2
+	      ;;
+              7)
+	      read -p "Cloud Music: " filename
+      docker run --restart=always --name unmusic -d -p 1800:8080 nondanee/unblockneteasemusic
+
+      if [ $? -eq 0 ];then
+	          echo "success!" >&2
+      fi    
+      sleep 2
+      ;;
+
+       8)
+	read -p "Aria2-pro : " filename
+docker pull p3terx/aria2-pro
+        docker run -d \
+	    --name aria2-pro \
+	    --restart unless-stopped \
+		--log-opt max-size=1m \
+		--network host \
+        -e PUID=$UID \
+        -e PGID=$GID \
+	    -e RPC_SECRET=1319964f \
+	    -e RPC_PORT=6800 \
+        -e LISTEN_PORT=6888 \
+	    -e SPECIAL_MODE=rclone \
+	    -v ~/aria2:/config \
+		-v /mnt/256/down:/downloads \
+		-v ~/aria2/complted:/complted \
+	    -e SPECIAL_MODE=rclone \
+	    p3terx/aria2-pro
+if [ $? -eq 0 ];then
+	    echo "success!" >&2
+fi    
+sleep 2
+;;
+
+9)
+	read -p "EMBY INSTALL  : " filename
+docker run -d  \
+    --name=emby \
+    -v /root/emby/config:/config   \
+    -v /home/acg:/mnt/share1 \
+    -v /home/one:/mnt/share2     \
+    -p 8096:8096  \
+    -p 2053:2053  \
+    -e UID=1000  \
+    -e GID=100  \
+    -e GIDLIST=100 \
+    --restart unless-stopped  \
+ zishuo/embyserver 
+ *
+ if [ $? -eq 0 ];then
+	     echo "success!" >&2
+ fi    
+ sleep 2
+ ;;
+ 
+ 10)
+read -p "Rclone一键安装 : " filename
+curl https://rclone.org/install.sh | bash
+if [ $? -eq 0 ];then
+    echo "success!" >&2
+fi    
+sleep 2
+;;
+ 11)
+	exit 0
+	;;
+
+*)
+	;;
+
+
+
+
+esac
+
+}
+
+
+while :
+
+do
+
+	cat<<EOF
+ *************************************
+             DEBIAN10一键安装脚本    
+
+    1.bbr              
+  
+    2.pikpak-webdav 
+
+    3.docker         
+
+    4.修复ssl报错     
+   
+    5.一键安装zfile 
+  
+    6.一键安装docker-compose
+    
+    7.一键搭建网易云解析
+     
+    8.一键搭建aria2-pro
+    
+    9.一键安装EMBY
+    
+    10.一键安装Rclone
+    
+    11.EXIT
+ *************************************
+EOF
+ 
+
+read -p "please enter your choice : " choice
+
+usage
+
+done
+
