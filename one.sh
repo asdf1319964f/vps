@@ -148,6 +148,14 @@ fi
 sleep 2
 ;;
 11)
+read -p "一键测速speedtest: " filename
+wget -qO- bench.sh | bash
+if [ $? -eq 0 ];then
+    echo "success!" >&2
+fi    
+sleep 2
+;;
+12)
 exit 0
 ;;
 
@@ -185,8 +193,10 @@ cat<<EOF
 *   9.一键安装EMBY                       *
     
 *   10.一键更新Docker容器                *
+    
+*   11.一键测速                          *
 
-*   11.EXIT                            *
+*   12.EXIT                            *
 * **************************************
 EOF
  
