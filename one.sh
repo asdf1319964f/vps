@@ -16,17 +16,18 @@ fi
 
 2)
 read -p "pikpak-webdav : " file newname
-docker run -d --name=pikpak-webdav --restart=unless-stopped 
---network=host 
--v /etc/localtime:/etc/localtime
--e TZ="Asia/Shanghai" 
--e JAVA_OPTS="-Xmx512m" 
--e SERVER_PORT="8080" 
--e PIKPAK_USERNAME="asdf131996455@gmail.com" 
--e PIKPAK_PASSWORD="1319964f" 
--e PIKPAK_PROXY_HOST="" 
--e PIKPAK_PROXY_PORT="" 
--e PIKPAK_PROXY_PROXY-TYPE="HTTP/SOCKS/DIRECT"  
+docker run --name=pikpak-webdav 
+--restart=unless-stopped \
+--network=host \
+-v /etc/localtime:/etc/localtime \
+-e TZ="Asia/Shanghai" \
+-e JAVA_OPTS="-Xmx512m" \
+-e SERVER_PORT="8080" \
+-e PIKPAK_USERNAME="asdf131996455@gmail.com" \
+-e PIKPAK_PASSWORD="1319964f" \
+-e PIKPAK_PROXY_HOST="" \
+-e PIKPAK_PROXY_PORT="" 和\
+-e PIKPAK_PROXY_PROXY-TYPE="HTTP/SOCKS/DIRECT"  \
 vgearen/pikpak-webdav
 if [ $? -eq 0 ] ;then
     echo "success!" >&2
@@ -37,8 +38,11 @@ sleep 2
 
 3)
 read -p "Docker : " filename
-curl -fsSL https://get.docker.com -o get-docker.sh                   
-sh get-docker.sh
+apt install apt-transport-https ca-certificates curl gnupg2 software-properties-common
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+apt update
+apt install docker-ce
 if [ $? -eq 0 ];then
     echo "success!" >&2
 fi    
@@ -164,7 +168,28 @@ if [ $? -eq 0 ];then
 fi
 sleep2
 ;;
+
 13)
+read -p "一键安装Rclone: " filename
+curl https://rclone.org/install.sh | sudo bash
+if [ $? -eq 0 ];then
+    echo "success!" >&2
+fi
+sleep2
+;;
+
+14)
+read -p "一键安装alist: " filename
+docker run -d --restart=always -v /etc/alist:/opt/alist/data -p 80:5244 --name="alist" xhofe/alist:latest
+if [ $? -eq 0 ];then
+    echo "success!" >&2
+fi
+sleep2
+;;
+
+
+
+15)
 exit 0
 ;;
 
@@ -207,7 +232,11 @@ _________________________________________
 
 |   12.一键安装基础包                      |
 
-|   13.EXIT                              |
+|   13.一键安装Rclone                          |
+
+|   14.一键安装alist 
+
+   15.EXIT
 |________________________________________|
 EOF
  
