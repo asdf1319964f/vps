@@ -16,7 +16,7 @@ fi
 
 2)
 read -p "pikpak-webdav : " file newname
-docker run -d --name=pik --restart=unless-stopped \
+docker run --name=pik --restart=unless-stopped \
 --network=host \
 -v /etc/localtime:/etc/localtime \
 -e TZ="Asia/Shanghai" \
