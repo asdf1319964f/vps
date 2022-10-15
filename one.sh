@@ -16,7 +16,8 @@ fi
 
 2)
 read -p "pikpak-webdav : " file newname
-docker run --name=pikpak-webdav 
+docker run -d \
+--name=pikpak-webdav \
 --restart=unless-stopped \
 --network=host \
 -v /etc/localtime:/etc/localtime \
