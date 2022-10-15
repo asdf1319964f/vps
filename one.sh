@@ -61,7 +61,7 @@ if [ $? -eq 0 ];then
 fi    
 sleep 2
 
-
+6)
 read -p "Docker-Compose : " filename
 curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
