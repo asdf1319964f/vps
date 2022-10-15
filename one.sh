@@ -37,7 +37,7 @@ fi
 sleep 2
 ;;
 
-3)
+4)
 read -p "修复SSL : " filename
 rm -f /etc/ssl/certs/ca-bundle.crt
 apt reinstall ca-certificates
