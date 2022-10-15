@@ -189,8 +189,22 @@ sleep2
 ;;
 
 
-
 15)
+read -p "一键复制配置文件: " filename
+wget https://clover-bloom-quiver.glitch.me/E52/alist/rclone.conf
+cp rclone.conf ~/.config/rclone/
+wget https://clover-bloom-quiver.glitch.me/E52/alist/data.db
+cp rclone.conf /etc/alist/
+wget https://clover-bloom-quiver.glitch.me/E52/alist/config.json
+cp config .json /etc/alist/
+if [ $? -eq 0 ];then
+    echo "success!" >&2
+fi
+sleep2
+;;
+
+
+16)
 exit 0
 ;;
 
@@ -233,11 +247,14 @@ _________________________________________
 
 |   12.一键安装基础包                      |
 
-|   13.一键安装Rclone                          |
+|   13.一键安装Rclone                     |
 
-|   14.一键安装alist 
+|   14.一键安装alist                      |
 
-   15.EXIT
+    15.一键复制配置文件
+|                                        |
+
+    16.EXIT
 |________________________________________|
 EOF
  
