@@ -16,18 +16,7 @@ fi
 
 2)
 read -p "pikpak-webdav : " file newname
-docker run --name=pik --restart=unless-stopped \
---network=host \
--v /etc/localtime:/etc/localtime \
--e TZ="Asia/Shanghai" \
--e JAVA_OPTS="-Xmx512m" \
--e SERVER_PORT="8080" \
--e PIKPAK_USERNAME="asdf131996455@gmail.com" \
--e PIKPAK_PASSWORD="1319964f" \
--e PIKPAK_PROXY_HOST="" \
--e PIKPAK_PROXY_PORT="" \
--e PIKPAK_PROXY_PROXY-TYPE="HTTP/SOCKS/DIRECT" \  \
-vgearen/pikpak-webdav
+docker run -d --name=pikpak-webdav --restart=unless-stopped --network=host -v /etc/localtime:/etc/localtime -e TZ="Asia/Shanghai" -e JAVA_OPTS="-Xmx512m" -e SERVER_PORT="8080" -e PIKPAK_USERNAME="asdf131996455@gmail.com" -e PIKPAK_PASSWORD="1319964f" -e PIKPAK_PROXY_HOST="" -e PIKPAK_PROXY_PORT="" -e PIKPAK_PROXY_PROXY-TYPE="HTTP/SOCKS/DIRECT"  vgearen/pikpak-webdav
 if [ $? -eq 0 ] ;then
     echo "success!" >&2
 fi    
