@@ -16,9 +16,7 @@ fi
 
 2)
 read -p "pikpak-webdav : " file newname
-docker run -d \
---name=pikpak-webdav \
---restart=unless-stopped \
+docker run -d --name=pikpak-webdav --restart=unless-stopped \
 --network=host \
 -v /etc/localtime:/etc/localtime \
 -e TZ="Asia/Shanghai" \
@@ -27,8 +25,8 @@ docker run -d \
 -e PIKPAK_USERNAME="asdf131996455@gmail.com" \
 -e PIKPAK_PASSWORD="1319964f" \
 -e PIKPAK_PROXY_HOST="" \
--e PIKPAK_PROXY_PORT="" 和\
--e PIKPAK_PROXY_PROXY-TYPE="HTTP/SOCKS/DIRECT"  \
+-e PIKPAK_PROXY_PORT="" \
+-e PIKPAK_PROXY_PROXY-TYPE="HTTP/SOCKS/DIRECT" \  \
 vgearen/pikpak-webdav
 if [ $? -eq 0 ] ;then
     echo "success!" >&2
@@ -98,9 +96,7 @@ sleep 2
 8)
 read -p "Aria2-pro : " filename
 docker pull p3terx/aria2-pro
-docker run -d \
-    --name aria2-pro \
-    --restart unless-stopped \
+docker run -d --name aria2-pro --restart unless-stopped \
     --log-opt max-size=1m \
     --network host \
     -e PUID=$UID \
