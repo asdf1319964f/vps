@@ -192,11 +192,11 @@ sleep2
 15)
 read -p "一键复制配置文件: " filename
 wget https://clover-bloom-quiver.glitch.me/E52/alist/rclone.conf
-cp rclone.conf ~/.config/rclone/
+cp rclone.conf /root/.config/rclone/
 wget https://clover-bloom-quiver.glitch.me/E52/alist/data.db
 cp rclone.conf /etc/alist/
 wget https://clover-bloom-quiver.glitch.me/E52/alist/config.json
-cp config .json /etc/alist/
+cp config.json /etc/alist/
 if [ $? -eq 0 ];then
     echo "success!" >&2
 fi
