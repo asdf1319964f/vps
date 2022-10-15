@@ -16,7 +16,19 @@ fi
 
 2)
 read -p "pikpak-webdav : " file newname
-docker run -d --name=pikpak-webdav --restart=unless-stopped --network=host -v /etc/localtime:/etc/localtime -e TZ="Asia/Shanghai" -e JAVA_OPTS="-Xmx512m" -e SERVER_PORT="8080" -e PIKPAK_USERNAME="asdf131996455@gmail.com" -e PIKPAK_PASSWORD="1319964f" -e PIKPAK_PROXY_HOST="" -e PIKPAK_PROXY_PORT="" -e PIKPAK_PROXY_PROXY-TYPE="HTTP/SOCKS/DIRECT"  vgearen/pikpak-webdav
+docker run  --restart=always --name=pikpak-webdav \
+--restart=unless-stopped \
+--network=host \
+-v /etc/localtime:/etc/localtime \
+-e TZ="Asia/Shanghai" \
+-e JAVA_OPTS="-Xmx512m" \
+-e SERVER_PORT="8080" \
+-e PIKPAK_USERNAME="asdf131996455@gmail.com" \
+-e PIKPAK_PASSWORD="1319964f" \
+-e PIKPAK_PROXY_HOST="" \
+-e PIKPAK_PROXY_PORT="" \
+-e PIKPAK_PROXY_PROXY-TYPE="HTTP/SOCKS/DIRECT"  \
+vgearen/pikpak-webdav
 if [ $? -eq 0 ] ;then
     echo "success!" >&2
 fi    
@@ -37,7 +49,7 @@ fi
 sleep 2
 ;;
 
-4)
+3)
 read -p "修复SSL : " filename
 rm -f /etc/ssl/certs/ca-bundle.crt
 apt reinstall ca-certificates
@@ -50,7 +62,7 @@ sleep 2
 
 5)
 read -p "zfile : " filename
-docker run -d --name=zfile --restart=always \
+docker run  --restart=always --name=zfile \
     -p 8080:8080 \
     -v /root/zfile/conf:/root/.zfile-v4 \
     -v /root/zfile/data:/root/zfile/data \
@@ -60,6 +72,7 @@ if [ $? -eq 0 ];then
     echo "success!" >&2
 fi    
 sleep 2
+;;
 
 6)
 read -p "Docker-Compose : " filename
@@ -85,7 +98,9 @@ sleep 2
 8)
 read -p "Aria2-pro : " filename
 docker pull p3terx/aria2-pro
-docker run -d --name aria2-pro --restart unless-stopped \
+docker run -d \
+    --name aria2-pro \
+    --restart unless-stopped \
     --log-opt max-size=1m \
     --network host \
     -e PUID=$UID \
