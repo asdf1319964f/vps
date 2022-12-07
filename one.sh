@@ -38,6 +38,10 @@ sleep 2
 
 3)
 read -p "Docker : " filename
+rm /etc/apt/source.list
+wget https://raw.githubusercontent.com/asdf1319964f/vps/master/source.list
+apt update
+wget 
 apt install apt-transport-https ca-certificates curl gnupg2 software-properties-common
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
@@ -172,7 +176,7 @@ sleep2
 
 13)
 read -p "一键安装Rclone: " filename
-curl https://rclone.org/install.sh | sudo bash
+curl https://rclone.org/install.sh | bash
 if [ $? -eq 0 ];then
     echo "success!" >&2
 fi
