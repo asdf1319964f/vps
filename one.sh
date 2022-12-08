@@ -185,7 +185,7 @@ sleep2
 
 14)
 read -p "一键安装alist: " filename
-docker run -d --restart=always -v /etc/alist:/opt/alist/data -p 80:5244 --name="alist" xhofe/alist:latest
+curl -fsSL "https://alist.nn.ci/v3.sh" | bash -s install
 if [ $? -eq 0 ];then
     echo "success!" >&2
 fi
