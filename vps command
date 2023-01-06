@@ -1,4 +1,13 @@
 ***********************************************************************************************************
+docker安装adminer
+docker pull adminer
+docker run --name adminer -p 3300:3306 -d adminer
+docker安装mysql
+docker pull mysql:latest
+docker run --name mysql-name -p 3778:3306 -e MYSQL_ROOT_PASSWORD=1319964f -d mysql:latest
+docker对接adminer
+docker run --link 001c39d55b27:mysql-name --name adminer -p 3300:8080 -d --restart=always adminer
+***********************************************************************************************************
 onedrive E5自动续期及应用注册
 应用注册地址 
 进入https://azure.microsoft.com/zh-cn/
