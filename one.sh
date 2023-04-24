@@ -167,7 +167,7 @@ sleep 2
 ;;
 12)
 read -p "apt一键安装基础包: " filename
-apt update && apt upgrade && apt install wget curl git net-tools nano screen
+apt update && apt upgrade && apt install wget curl git net-tools nano screen tsu
 if [ $? -eq 0 ];then
     echo "success!" >&2
 fi
