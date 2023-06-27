@@ -10,25 +10,29 @@ function install_packages {
 # 定义函数：解压 .rar 文件
 function extract_rar {
   read -p "请输入解压密码: " rar_password
-  find /mnt/128/downloads/p/ -name "*.rar" -execdir unrar x -p"$rar_password" -o+ {} \;
-  find /mnt/128/downloads/p/ -name "*.7z.001" -execdir 7z x -p$rar_password {} \;
+  read -p "请输入目标目录: " target_directory
+  find "$target_directory" -name "*.rar" -execdir unrar x -p"$rar_password" -o+ {} \;
+  find "$target_directory" -name "*.7z.001" -execdir 7z x -p142150 {} \;
 }
 
 # 定义函数：删除指定文件类型
 function delete_files {
-  find /mnt/128/downloads/p/ \( -name "*.txt" -o -name "*.url" -o -name "*.rar" -o -name "*.zip" -o -name "*.7z" \) -exec rm -rf {} \;
+  read -p "请输入目标目录: " target_directory
+  find "$target_directory" \( -name "*.txt" -o -name "*.url" -o -name "*.rar" -o -name "*.zip" -o -name "*.7z" \) -exec rm -rf {} \;
 }
 
 # 定义函数：解压 .zip 文件
 function extract_zip {
   read -p "请输入解压密码: " zip_password
-  find /mnt/128/downloads/p/ -name "*.zip" -execdir unzip -P "$zip_password" {} \;
+  read -p "请输入目标目录: " target_directory
+  find "$target_directory" -name "*.zip" -execdir unzip -P "$zip_password" {} \;
 }
 
 # 定义函数：解压 .7z 文件
 function extract_7z {
   read -p "请输入解压密码: " _7z_password
-  find /mnt/128/downloads/p/ -name "*.7z" -execdir 7z x -p"$_7z_password" {} \;
+  read -p "请输入目标目录: " target_directory
+  find "$target_directory" -name "*.7z" -execdir 7z x -p"$_7z_password" {} \;
 }
 
 # 显示菜单选项
@@ -38,8 +42,6 @@ function show_menu {
   echo "2. 解压 .rar 分卷包和 .7z 分卷包"
   echo "3. 删除指定文件类型"
   echo "4. 解压 .zip 分卷包"
-  echo "5. 清空目录中的所有文件"
-  echo "6. 删除指定目录"
   echo "0. 退出"
 }
 
@@ -59,12 +61,6 @@ function handle_option {
     4)
       extract_zip
       ;;
-    5)
-      clear_directory
-      ;;
-    6)
-      delete_directory
-      ;;
     0)
       exit 0
       ;;
@@ -72,16 +68,6 @@ function handle_option {
       echo "无效的选项"
       ;;
   esac
-}
-
-# 清空目录中的所有文件
-function clear_directory {
-  find /mnt/128/downloads/p/ -type f -exec rm -f {} \;
-}
-
-# 删除指定目录
-function delete_directory {
-  find /mnt/128/downloads/p/ -name "*国产无码*" -exec rm -rf {} \;
 }
 
 # 主循环
