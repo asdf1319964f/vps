@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # 安装所需软件
-sudo apt-get update
-sudo apt-get install p7zip p7zip-full p7zip-rar unzip unar unrar
+ apt-get update
+ apt-get install p7zip p7zip-full p7zip-rar unzip unar unrar
 
 # 显示解压选项菜单
 echo "请选择操作:"
