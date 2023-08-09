@@ -99,7 +99,7 @@ function block_unsafe_ports() {
 
 function run_speedtest() {
     echo "一键测速..."
-    curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -
+    wget -qO- bench.sh | bash
 }
 
 function main_menu() {
