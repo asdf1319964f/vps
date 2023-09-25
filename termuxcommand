@@ -1,0 +1,9 @@
+apt install postgresql 安装postgresql
+mkdir -p $PREFIX/var/lib/postgresql 创建postgresql文件夹
+chmod 700 $PREFIX/var/lib/postgresql 给文件夹权限
+initdb $PREFIX/var/lib/postgresql 载入postgresql
+pg_ctl -D $PREFIX/var/lib/postgresql -l $PREFIX/var/lib/postgresql/server.log start 启动postgresql
+createuser --superuser alist 新建账户
+createdb alist_db 新建数据库
+psql -U alist -d alist_db登陆并使用数据库
+psql -U alist -d alist_db -a -f postgre.sql 导入数据库
