@@ -17,16 +17,17 @@ docker对接adminer
 docker run --link 001c39d55b27:mysql-name --name adminer -p 3300:8080 -d --restart=always adminer
 ***********************************************************************************************************
 onedrive E5自动续期及应用注册
-应用注册地址 
+企业应用注册地址 
 进入https://azure.microsoft.com/zh-cn/
 点击管理Azure Active Directory
 点击左侧扩展栏里应用注册 新注册 
 e5订阅web填写http://localhost/e5sub
-Onemanager https://scfonedrive.github.io 
-Alist https://tool.nn.ci/onedrive/callback
+Alist https://entra.microsoft.com/TokenAuthorize
 注册和密码 进行注册copy应用密码
 api权限 e5订阅用 openid offline_access mail.read
-普通应用 Files.Read.All Files.ReadWrite.All
+注册企业应用程序API权限 Files.Read.All Files.ReadWrite.All
+API授权后，我们去授权组织应用
+左侧侧边栏 ---> 企业应用程序 ---> 所有应用程序 ---> {选择我们开始新建的哪个应用名称} ---> 权限 ---> 点击 代表xxxx授予管理员同意
 ***********************************************************************************************************************************************************************
 修复Debian ssl报错
 rm -f /etc/ssl/certs/ca-bundle.crt
