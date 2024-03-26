@@ -1,826 +1,535 @@
-// upload=60506845641; download=839926344710; total=1099511627776; expire=0;
 {
-  "outbounds": [
+  log:
+  {
+    disabled: true
+    level: error
+    output: ./src/log/box.log
+    timestamp: true
+  }
+  dns:
+  {
+    fakeip:
     {
-      "tag": "济南联通 01 | ws",
-      "type": "vmess",
-      "server": "60.215.152.138",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      enabled: true
+      inet4_range: 198.18.0.0/15
+      inet6_range: fc00::/18
+    }
+    servers:
+    [
+      {
+        tag: proxyServerNameServer
+        address: https://223.5.5.5/dns-query
+        detour: direct
+        strategy: prefer_ipv4
+        notice: 传送阵域名解析专用 DNS 服务器
       }
-    },
-    {
-      "tag": "济南联通 02 | tcp",
-      "type": "vmess",
-      "server": "60.215.152.139",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "http",
-        "headers": {
-          "Connection": "keep-alive"
-        },
-        "method": "GET",
-        "path": "/",
-        "host": "engineering.toutiao.com"
+      {
+        tag: directDns
+        address: https://223.5.5.5/dns-query
+        detour: direct
+        notice: 大白嗓唱法使用的 DNS 服务器
       }
-    },
-    {
-      "tag": "杭州电信 01 | ws | 非80",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 1080,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        tag: proxyDns
+        address: tcp://1.1.1.1
+        detour: proxy
+        notice: 国外 DNS 服务器
       }
-    },
-    {
-      "tag": "杭州电信 02 | tcp | 非80",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 1081,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "http",
-        "headers": {
-          "Connection": "keep-alive"
-        },
-        "method": "GET",
-        "path": "/",
-        "host": "engineering.toutiao.com"
+      {
+        tag: GLOBALDns
+        address: tcp://1.1.1.1
+        detour: direct
+        notice: 学院派唱法使用的 DNS 服务器
       }
-    },
-    {
-      "tag": "香港 01 | ws",
-      "type": "vmess",
-      "server": "112.3.30.174",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        enabled: false
+        tag: dhcp
+        address: dhcp://auto
+        notice: 向上游 dhcp 服务器发起 DNS 请求，因为有人过敏，默认关闭，有需要自行打开
       }
-    },
-    {
-      "tag": "香港 02 | ws",
-      "type": "vmess",
-      "server": "8.7.198.46",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        enabled: false
+        tag: local
+        address: local
+        notice: 通过系统 DNS 发起 DNS 请求，因为有人过敏，默认关闭，有需要自行打开
       }
-    },
-    {
-      "tag": "香港 03 | tcp",
-      "type": "vmess",
-      "server": "112.3.30.175",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "http",
-        "headers": {
-          "Connection": "keep-alive"
-        },
-        "method": "GET",
-        "path": "/",
-        "host": "engineering.toutiao.com"
+      {
+        enabled: true
+        tag: fakedns
+        address: fakeip
+        notice: fakeip 专用 DNS 服务器
       }
-    },
-    {
-      "tag": "香港 04 | tcp",
-      "type": "vmess",
-      "server": "223.111.150.118",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "http",
-        "headers": {
-          "Connection": "keep-alive"
-        },
-        "method": "GET",
-        "path": "/",
-        "host": "engineering.toutiao.com"
+      {
+        tag: nxdomain
+        address: RCode://success
+        notice: 对域名解析返回空解析
       }
-    },
-    {
-      "tag": "台湾 01 | ws",
-      "type": "vmess",
-      "server": "93.46.8.90",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        tag: dnspod-udp
+        address: 119.29.29.29
+        detour: domestic
       }
-    },
-    {
-      "tag": "台湾 02 | ws",
-      "type": "vmess",
-      "server": "8.7.198.46",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        tag: dnspod-doh
+        address: https://120.53.53.53/dns-query
+        detour: domestic
       }
-    },
-    {
-      "tag": "台湾 03 | tcp",
-      "type": "vmess",
-      "server": "36.228.209.192",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "http",
-        "headers": {
-          "Connection": "keep-alive"
-        },
-        "method": "GET",
-        "path": "/",
-        "host": "engineering.toutiao.com"
+      {
+        tag: fiftythree
+        address: https://1.15.50.48/verse
+        detour: domestic
       }
-    },
-    {
-      "tag": "台湾 04 | tcp",
-      "type": "vmess",
-      "server": "36.228.209.225",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "http",
-        "headers": {
-          "Connection": "keep-alive"
-        },
-        "method": "GET",
-        "path": "/",
-        "host": "engineering.toutiao.com"
+    ]
+    rules:
+    [
+      {
+        outbound:
+        [
+          direct
+          OUTBOUNDLESS
+        ]
+        server: dnspod-udp
+        notice: 直连域名解析规则
       }
-    },
-    {
-      "tag": "新加坡 01 | ws",
-      "type": "vmess",
-      "server": "112.3.30.170",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        outbound: any
+        server: proxyServerNameServer
+        disable_cache: true
+        notice: 传送阵域名解析规则
       }
-    },
-    {
-      "tag": "新加坡 02 | ws",
-      "type": "vmess",
-      "server": "223.111.150.117",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        enabled: false
+        rule_set: category-ads-all-domain
+        server: nxdomain
+        notice: 通过 geosite 内建广告规则进行 DNS 层面的广告拦截，默认关闭，有需要自行打开
       }
-    },
-    {
-      "tag": "新加坡 03 | tcp",
-      "type": "vmess",
-      "server": "112.3.30.172",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "http",
-        "headers": {
-          "Connection": "keep-alive"
-        },
-        "method": "GET",
-        "path": "/",
-        "host": "engineering.toutiao.com"
+      {
+        clash_mode: Direct
+        server: directDns
       }
-    },
-    {
-      "tag": "新加坡 04 | tcp",
-      "type": "vmess",
-      "server": "112.3.30.173",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "http",
-        "headers": {
-          "Connection": "keep-alive"
-        },
-        "method": "GET",
-        "path": "/",
-        "host": "engineering.toutiao.com"
+      {
+        domain_suffix:
+        [
+          .msftncsi.com
+          .msftconnecttest.com
+        ]
+        server: dnspod-doh
       }
-    },
-    {
-      "tag": "日本 01 | ws",
-      "type": "vmess",
-      "server": "112.3.30.169",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        query_type:
+        [
+          A
+          AAAA
+        ]
+        server: fakedns
+        rewrite_ttl: 0
+        notice: 对 A 和 AAAA 类型的 DNS 请求返回 fake-ip 以尽量减少本地 dns 解析并尽可能的将域名送向远端。
       }
-    },
-    {
-      "tag": "日本 02 | ws",
-      "type": "vmess",
-      "server": "93.46.8.90",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        clash_mode: Global
+        server: GLOBALDns
       }
-    },
-    {
-      "tag": "日本 03 | tcp",
-      "type": "vmess",
-      "server": "112.3.30.168",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "http",
-        "headers": {
-          "Connection": "keep-alive"
-        },
-        "method": "GET",
-        "path": "/",
-        "host": "engineering.toutiao.com"
+      {
+        rule_set:
+        [
+          proxy-domain
+          tiktok-domain
+        ]
+        server: proxyDns
       }
-    },
-    {
-      "tag": "日本 04 | tcp",
-      "type": "vmess",
-      "server": "112.3.30.166",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "http",
-        "headers": {
-          "Connection": "keep-alive"
-        },
-        "method": "GET",
-        "path": "/",
-        "host": "engineering.toutiao.com"
+      {
+        domain: www.gstatic.com
+        server: dnspod-doh
       }
-    },
-    {
-      "tag": "韩国 01 | ws",
-      "type": "vmess",
-      "server": "223.111.150.106",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        rule_set:
+        [
+          push-domain
+          direct-domain
+          bytedance-domain
+          microsoft@cn-domain
+          apple@cn-domain
+          category-games@cn-domain
+          cn-domain
+        ]
+        server: dnspod-doh
       }
-    },
-    {
-      "tag": "韩国 02 | tcp",
-      "type": "vmess",
-      "server": "120.195.181.4",
-      "server_port": 80,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "http",
-        "headers": {
-          "Connection": "keep-alive"
-        },
-        "method": "GET",
-        "path": "/",
-        "host": "engineering.toutiao.com"
+      {
+        rule_set: geolocation-!cn-domain
+        server: proxyDns
       }
-    },
-    {
-      "tag": "泰国 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20027,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        domain_regex: .
+        server: fiftythree
+        fallback_rules:
+        [
+          {
+            rule_set: cn-ip
+            invert: true
+          }
+        ]
       }
-    },
+    ]
+    final: proxyDns
+    strategy: ipv4_only
+    reverse_mapping: true
+    independent_cache: true
+    notice: 由于部分机器对 ipv6 解析过敏，默认设置为 ipv4_only，有需要可以自行修改
+  }
+  inbounds:
+  [
     {
-      "tag": "越南 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20023,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      enabled: false
+      tag: tproxy
+      type: tproxy
+      listen: "::"
+      listen_port: 10086
+      sniff: true
+      always_resolve_udp: true
+      sniff_override_destination: false
+      sniff_override_rules:
+      [
+        {
+          rule_set:
+          [
+            push-domain
+            push-ip
+            skip-override
+          ]
+          invert: true
+        }
+      ]
+    }
+    {
+      enabled: true
+      tag: tun
+      type: tun
+      interface_name: tun1
+      inet4_address: 172.19.0.0/16
+      inet6_address: 2001:10::/28
+      strict_route: true
+      auto_route: true
+      stack: mixed
+      sniff: true
+      always_resolve_udp: true
+      sniff_override_destination: false
+      sniff_override_rules:
+      [
+        {
+          rule_set:
+          [
+            push-domain
+            push-ip
+            skip-override
+          ]
+          invert: true
+        }
+      ]
+    }
+  ]
+  outbounds:
+  [
+    {
+      tag: direct
+      type: direct
+    }
+    {
+      tag: block
+      type: block
+    }
+    {
+      tag: dns
+      type: dns
+    }
+    {
+      tag: proxy
+      type: selector
+      providers: all
+      includes: 美国|新加坡|Singapore|Korea|俄罗斯|Dubai|乌克兰|US|UK|JP|JAPAN|韩国|法兰克福|土耳其|首尔|迪拜|香港|台湾|日本|SG|TR|AR|KR|Azure
+      excludes: 校园网|TCP
+      types:
+      [
+        vless
+        vmess
+      ]
+    }
+    {
+      tag: domestic
+      type: selector
+      providers: all
+      includes: 移动|联通|电信
+      excludes: 校园网|TCP
+      types:
+      [
+        vless
+        vmess
+      ]
+    }
+  ]
+  route:
+  {
+    rule_set:
+    [
+      {
+        tag: category-ads-all-domain
+        path: ./RuleProviders/category-ads-all-domain.srs
+        url: https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/singbox_rule_set/geosite-category-ads-all.srs
+        type: remote
+        format: binary
+        download_detour: proxy
+        update_interval: 24h
       }
-    },
-    {
-      "tag": "印度尼西亚 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20002,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        tag: geolocation-!cn-domain
+        path: ./RuleProviders/geolocation-!cn-domain.srs
+        url: https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/singbox_rule_set/geosite-geolocation-!cn.srs
+        type: remote
+        format: binary
+        download_detour: proxy
+        update_interval: 24h
       }
-    },
-    {
-      "tag": "美国 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20032,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        tag: tiktok-domain
+        path: ./RuleProviders/tiktok-domain.srs
+        url: https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/singbox_rule_set/geosite-tiktok@!cn.srs
+        type: remote
+        format: binary
+        download_detour: proxy
+        update_interval: 24h
       }
-    },
-    {
-      "tag": "美国 02 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20028,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        tag: bytedance-domain
+        path: ./RuleProviders/bytedance-domain.srs
+        url: https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/singbox_rule_set/geosite-bytedance.srs
+        type: remote
+        format: binary
+        download_detour: proxy
+        update_interval: 24h
       }
-    },
-    {
-      "tag": "俄罗斯 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20003,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        tag: apple@cn-domain
+        path: ./RuleProviders/apple@cn-domain.srs
+        url: https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/singbox_rule_set/geosite-apple@cn.srs
+        type: remote
+        format: binary
+        download_detour: proxy
+        update_interval: 24h
       }
-    },
-    {
-      "tag": "白俄罗斯 01  | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20019,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        tag: microsoft@cn-domain
+        path: ./RuleProviders/microsoft@cn-domain.srs
+        url: https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/singbox_rule_set/geosite-microsoft@cn.srs
+        type: remote
+        format: binary
+        download_detour: proxy
+        update_interval: 24h
       }
-    },
-    {
-      "tag": "乌克兰 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20005,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        tag: category-games@cn-domain
+        path: ./RuleProviders/category-games@cn-domain.srs
+        url: https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/singbox_rule_set/geosite-category-games@cn.srs
+        type: remote
+        format: binary
+        download_detour: proxy
+        update_interval: 24h
       }
-    },
-    {
-      "tag": "哈萨克斯坦 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20018,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        tag: cn-domain
+        path: ./RuleProviders/cn-domain.srs
+        url: https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/singbox_rule_set/geosite-cn.srs
+        type: remote
+        format: binary
+        download_detour: proxy
+        update_interval: 24h
       }
-    },
-    {
-      "tag": "德国 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20004,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        tag: cn-ip
+        path: ./RuleProviders/cn-ip.srs
+        url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs
+        type: remote
+        format: binary
+        download_detour: proxy
+        update_interval: 24h
       }
-    },
-    {
-      "tag": "捷克 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20024,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        tag: proxy-domain
+        path: ./RuleProviders/proxy-domain.json
+        type: local
+        format: source
       }
-    },
-    {
-      "tag": "芬兰 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20012,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        tag: direct-domain
+        path: ./RuleProviders/direct-domain.json
+        type: local
+        format: source
       }
-    },
-    {
-      "tag": "爱沙尼亚 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20021,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        tag: push-domain
+        path: ./RuleProviders/push-domain.json
+        type: local
+        format: source
       }
-    },
-    {
-      "tag": "波兰 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20013,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        tag: push-ip
+        path: ./RuleProviders/push-ip.json
+        type: local
+        format: source
       }
-    },
-    {
-      "tag": "斯洛伐克 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20026,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        tag: skip-override
+        path: ./RuleProviders/skip-override.json
+        type: local
+        format: source
       }
-    },
-    {
-      "tag": "挪威 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20025,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+    ]
+    rules:
+    [
+      {
+        enabled: false
+        rule_set: category-ads-all-domain
+        outbound: block
+        notice: 广告拦截
       }
-    },
-    {
-      "tag": "荷兰 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20010,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        protocol: dns
+        outbound: dns
+        notice: dns 解析劫持
       }
-    },
-    {
-      "tag": "瑞士 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20017,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        clash_mode: Direct
+        outbound: direct
       }
-    },
-    {
-      "tag": "意大利 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20016,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        clash_mode: Global
+        outbound: direct
       }
-    },
-    {
-      "tag": "土耳其 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20029,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        enabled: false
+        ip_version: 6
+        outbound: block
+        notice: 拦截 ipv6 流量
       }
-    },
-    {
-      "tag": "伊拉克 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20011,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        enabled: false
+        protocol: quic
+        outbound: block
+        notice: 拦截 quic 流量
       }
-    },
-    {
-      "tag": "罗马尼亚 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20008,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        rule_set:
+        [
+          proxy-domain
+          tiktok-domain
+        ]
+        outbound: proxy
       }
-    },
-    {
-      "tag": "乌兹别克斯坦 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20001,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        rule_set:
+        [
+          push-domain
+          direct-domain
+          bytedance-domain
+          microsoft@cn-domain
+          apple@cn-domain
+          category-games@cn-domain
+          cn-domain
+        ]
+        outbound: domestic
       }
-    },
-    {
-      "tag": "吉尔吉斯斯坦 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20000,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        rule_set: geolocation-!cn-domain
+        outbound: proxy
+        notice: 国外地址代理（减少域名解析）
       }
-    },
-    {
-      "tag": "爱尔兰 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20015,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        ip_cidr:
+        [
+          0.0.0.0/8
+          127.0.0.0/8
+          192.168.0.0/16
+          "::/128"
+          "::1/128"
+          fc70::/10
+          fe80::/10
+        ]
+        outbound: direct
+        notice: 保留地址直连，若不免流可加入路由绕过地址
       }
-    },
-    {
-      "tag": "波黑 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20014,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        rule_set:
+        [
+          push-ip
+          cn-ip
+        ]
+        outbound: domestic
+        notice: cn ip 和 apple push ip 分流。
       }
-    },
-    {
-      "tag": "阿根廷 01 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20030,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      {
+        ip_is_private: true
+        outbound: domestic
+        notice: private ip 分流。
       }
-    },
+    ]
+    final: proxy
+    auto_detect_interface: true
+    find_process: true
+    default_mark: 2333
+  }
+  experimental:
+  {
+    cache_file:
     {
-      "tag": "阿根廷 02 | ws",
-      "type": "vmess",
-      "server": "125.124.254.5",
-      "server_port": 20031,
-      "uuid": "3ff4df3e-9bdc-4d00-bb80-061d6d21a257",
-      "security": "auto",
-      "alter_id": 0,
-      "transport": {
-        "type": "ws",
-        "headers": {
-          "Host": "engineering.toutiao.com"
-        },
-        "path": "/"
+      enabled: true
+      path: ./src/cache.db
+    }
+    clash_api:
+    {
+      external_controller: 127.0.0.1:9909
+      external_ui: Dashboard
+      default_mode: Rule
+      secret: singBox
+    }
+  }
+  packages_list:
+  {
+    enabled: true
+    mode: black
+    black: []
+    white: []
+    notice:
+      '''
+      mode 有两个值，black or white
+      两个数组分别对应黑名单和白名单，目前名单里只允许填写包名
+      上个版本的 list 会根据 mode 自动转换成 black 和 white 两个数组里的值
+      '''
+  }
+  outbound_providers:
+  [
+    {
+      name: 国际复合
+      type: http
+      healthcheck_interval: 30m
+      subLink: https://xtls.rprx.vision/api/v1/client/subscribe?token=7823eb02e8e8458e8c1ab786cd26ba58
+      interval: 3600
+      subInfo:
+      {
+        timeStamp: 1711410227277
+        check: true
+        support: true
+        info:
+        {
+          upload: 56309776
+          download: 2503833916
+          total: 536870912000
+          expire: 1714059384
+        }
+      }
+      timeStamp: 1711410227277
+      extra:
+      {
+        host: engineering.toutiao.com
+        sni: engineering.toutiao.com
+        dta: true
       }
     }
   ]
