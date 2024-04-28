@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         海角vip解析下载
 // @namespace    http://www.djyun.icu/
-// @version      0.1
+// @version      0.2
 // @description  从特定页面下载视频
 // @include      https://*/post/details*
 // @match        https://*/post/details*
