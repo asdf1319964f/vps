@@ -27,8 +27,8 @@ services:
       SQLALCHEMY_DATABASE_URI: postgresql://hipy:hipy@postgres/hipy
       REDIS_URL: redis://:hipy@redis:6379/0
     volumes:
-      - ./hipy-server/app:/app
-      - ./hipy-server/logs:/logs
+      - ./hipy-server:/app
+      - ./logs:/logs
     restart: always
 
   hipy-ui:
