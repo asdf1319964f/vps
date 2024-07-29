@@ -18,7 +18,7 @@ services:
 
   hipy-server:
     build:
-      context: https://github.com/damengziufo/hipy-server.git
+      context: ./hipy-server
       dockerfile: Dockerfile
     depends_on:
       - postgres
@@ -33,7 +33,7 @@ services:
 
   hipy-ui:
     build:
-      context: https://github.com/hjdhnx/hipy-ui.git
+      context: ./hipy-ui
       dockerfile: Dockerfile
     depends_on:
       - hipy-server
