@@ -6,69 +6,51 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-hipy}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hipy}
-      POSTGRES_DB: ${POSTGRES_DB:-hipy}
-    ports:
-      - "${POSTGRES_PORT:-5432}:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-hipy}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      POSTGRES_USER: hipy
+      POSTGRES_PASSWORD: hipy
+      POSTGRES_DB: hipy
+    restart: always
 
   redis:
     image: redis:7
-    command: redis-server --requirepass ${REDIS_PASSWORD:-hipy}
-    ports:
-      - "${REDIS_PORT:-6379}:6379"
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+    command: redis-server --requirepass hipy
+    restart: always
 
   hipy-server:
     build:
-      context: ./hipy-server
+      context: https://github.com/damengziufo/hipy-server.git
       dockerfile: Dockerfile
     depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+      - postgres
+      - redis
     environment:
-      SQLALCHEMY_DATABASE_URI: postgresql://${POSTGRES_USER:-hipy}:${POSTGRES_PASSWORD:-hipy}@postgres/${POSTGRES_DB:-hipy}
-      REDIS_URL: redis://:${REDIS_PASSWORD:-hipy}@redis:6379/0
-    ports:
-      - "${SERVER_PORT:-5707}:5707"
+      SQLALCHEMY_DATABASE_URI: postgresql://hipy:hipy@postgres/hipy
+      REDIS_URL: redis://:hipy@redis:6379/0
     volumes:
-      - ./hipy-server:/app
-    command: sh -c "pip install -r requirements.txt && python app.py"
+      - ./hipy-server/app:/app
+      - ./hipy-server/logs:/logs
+    restart: always
 
   hipy-ui:
     build:
-      context: ./hipy-ui
+      context: https://github.com/hjdhnx/hipy-ui.git
       dockerfile: Dockerfile
     depends_on:
       - hipy-server
-    ports:
-      - "${UI_PORT:-8008}:80"
-    volumes:
-      - ./hipy-ui:/usr/share/nginx/html
+    restart: always
 
-  init-repo:
-    image: alpine/git
+  caddy:
+    image: caddy:2
+    ports:
+      - "80:80"
+      - "443:443"
     volumes:
-      - .:/git-repos
-    environment:
-      - GIT_HIPY_SERVER=https://github.com/damengziufo/hipy-server.git
-      - GIT_HIPY_UI=https://github.com/hjdhnx/hipy-ui.git
-    command: >
-      sh -c "
-        [ ! -d /git-repos/hipy-server ] && git clone $$GIT_HIPY_SERVER /git-repos/hipy-server || echo 'hipy-server already exists';
-        [ ! -d /git-repos/hipy-ui ] && git clone $$GIT_HIPY_UI /git-repos/hipy-ui || echo 'hipy-ui already exists'
-      "
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    restart: always
 
 volumes:
   postgres_data:
+  caddy_data:
+  caddy_config:
