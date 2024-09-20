@@ -1,0 +1,24 @@
+利用Docker搭建DrpyT4
+步骤：
+拉取DrpyT4 Docker镜像:
+Bash
+docker pull hjdhnx/drpy 
+运行DrpyT4容器:
+Bash
+docker run -it -p 5705:5705 -p 9001:9001 --restart=always --name drpy -d hjdhnx/drpy 
+此命令将创建名为 drpy 的容器并以分离模式 (-d) 运行它。 它还将容器的内部端口 5705 映射到主机的端口 5705，并将容器的内部端口 9001 映射到主机的端口 9001。 --restart=always 标志将确保容器在崩溃或系统重新启动时自动重启。
+修改配置文件:
+Bash
+docker exec -it drpy /bin/bash vi base/config.py 
+这将在容器内使用 vi 编辑器打开 config.py 文件。 对配置设置进行任何必要的更改。
+退出容器:
+Bash
+exit 
+重启DrpyT4服务:
+访问您的 VPS 的 IP 地址：9001 并使用默认凭据 user 和 123 登录到 DrpyT4 管理面板。 点击“重启”按钮重启 DrpyT4 服务。
+访问DrpyT4前端:
+打开网络浏览器并导航到 http://your-vps-ip:5705/index 以访问 DrpyT4 前端界面。 使用默认凭据 admin 和 drpy 登录到 CMS。
+其他注意事项：
+您可以使用 Cloudflare DNS 管理您的域名和 DNS 记录，或者您可以使用 Caddy 设置反向代理来从您自己的服务器提供 DrpyT4 前端。
+如果您对 config.py 文件进行任何更改，您需要重新启动 DrpyT4 服务才能使更改生效。
+有关使用 DrpyT4 的更多信息，请参阅官方文档：https://github.com/kevinr229/drpy/blob/main/doc/%E5%AE%89%E5%8D%93%E6%9C%AC%E5%9C%B0%E6%90%AD%E5%BB%BA%E8%AF%B4%E6%98%8E.md

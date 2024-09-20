@@ -1,0 +1,33 @@
+git remote -v
+git init
+git remote add origin git@github.com:asdf1319964f/TV.git
+git push origin master --force
+git push
+git pull
+git commit -m "更新"
+
+如果你已经有远程仓库配置，但仍然无法推送，请确保你有正确的访问权限，并且 SSH 密钥已经添加到 GitHub 账户中。如果没有，可以参考以下步骤生成并添加 SSH 密钥：
+
+1. 生成新的 SSH 密钥：
+
+    ```bash
+    ssh-keygen -t ed25519 -C "your_email@example.com"
+    ```
+
+    按提示操作，生成的公钥文件通常位于 `~/.ssh/id_ed25519.pub`。
+
+2. 将生成的公钥添加到 GitHub：
+
+    - 复制公钥内容：
+
+        ```bash
+        cat ~/.ssh/id_ed25519.pub
+        ```
+
+    - 登录 GitHub，进入设置页面，选择 "SSH and GPG keys"，点击 "New SSH key" 按钮，将复制的公钥内容粘贴进去并保存。
+
+完成上述步骤后，再次尝试强制推送：
+
+```bash
+git push origin master --force
+```

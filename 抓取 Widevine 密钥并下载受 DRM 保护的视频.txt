@@ -1,0 +1,54 @@
+## 抓取 Widevine 密钥并下载受 DRM 保护的视频
+
+**简介**
+
+Widevine 是一种数字版权管理 (DRM) 系统，用于保护流媒体视频内容。 它使用加密技术来防止未经授权的访问和复制。 然而，可以使用抓包和解密工具来绕过 Widevine DRM 并下载受保护的视频。
+
+**步骤**
+
+1. **安装浏览器扩展**
+
+   安装 Chrome 浏览器扩展 [WvG](https://github.com/FoxRefire/wvg)。 此扩展可用于捕获 MPD 链接，该链接包含有关受保护视频的信息。
+
+2. **获取 MPD 链接**
+
+   使用 WvG 扩展捕获 MPD 链接。 为此，请在受保护的视频上播放并使用扩展捕获网络流量。 MPD 链接通常位于 URL 或响应头中。
+
+3. **下载视频和音频**
+
+   使用 `yt-dlp` 下载视频和音频流。 运行以下命令，替换 `MPD_LINK` 为 MPD 链接：
+
+   ```bash
+   yt-dlp --allow-u "MPD_LINK"
+   ```
+
+4. **抓取解码密钥**
+
+   使用 WvG 扩展捕获解码密钥。 密钥通常位于响应头中，格式为 `<keyid>:<key>`.
+
+5. **解密视频和音频**
+
+   使用 `ffmpeg` 或 `mp4_decrypt` 解密视频和音频流。 运行以下命令，替换 `<keyid>:<key>`, `1.mp4` 和 `1.m4a` 为实际的文件名和密钥：
+
+   ```bash
+   ffmpeg -decryption_key '<keyid>:<key>' -i 1.mp4 -codec copy -y 2.mp4
+   ffmpeg -decryption_key '<keyid>:<key>' -i 1.m4a -codec copy -y 2.m4a
+   ```
+
+6. **合并视频和音频**
+
+   使用 `ffmpeg` 合并视频和音频流。 运行以下命令，替换 `2.mp4` 和 `2.m4a` 为实际的文件名：
+
+   ```bash
+   ffmpeg -i "2.mp4" -i "2.m4a" -c:v copy -c:a copy -y 3.mp4
+   ```
+
+**注意事项**
+
+- 此过程可能需要安装 Python 和 FFmpeg。
+- 您可能需要将抓取的证书文件放在与扩展程序解压缩后的文件夹相同的目录中。
+- 并非所有受 Widevine 保护的视频都可使用此方法下载。
+
+**免责声明**
+
+抓取 Widevine 密钥和下载受 DRM 保护的视频可能违反服务条款或法律法规。 请在使用此方法之前进行了解并承担相关风险。

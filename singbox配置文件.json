@@ -1,0 +1,31 @@
+{
+  "log": {
+    "level": "info"
+  },
+  "inbounds": [
+    {
+      "tag": "VMess-WS-80",
+      "type": "vmess",
+      "listen": "::",
+      "listen_port": 80,
+      "users": [
+        {
+          "uuid": "14d99244-0d04-435d-b8a8-2112e894d898",
+          "alterId": 0
+        }
+      ],
+      "transport": {
+        "type": "ws",
+        "path": "/",
+        "headers": {
+          "Host": "engineering.toutiao.com"
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "direct"
+    }
+  ]
+}
